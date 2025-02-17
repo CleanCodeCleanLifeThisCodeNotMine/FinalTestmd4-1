@@ -1,40 +1,53 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Quản lý Sản phẩm Đấu Giá</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/styles.css}">
 </head>
 <body>
-<h2>Danh sách sản phẩm</h2>
 
-<form th:action="@{/products}" method="get">
-    <input type="text" name="name" placeholder="Nhập tên sản phẩm">
-    <input type="text" name="category" placeholder="Nhập loại sản phẩm">
-    <button type="submit">Tìm kiếm</button>
-</form>
+<div class="container mt-5">
+    <h2>Danh sách sản phẩm</h2>
 
-<table border="1">
-    <tr>
-        <th>STT</th>
-        <th>Tên sản phẩm</th>
-        <th>Giá khởi điểm</th>
-        <th>Loại</th>
-        <th>Tình trạng</th>
-        <th>Hành động</th>
-    </tr>
-    <tr th:each="product, iterStat : ${products}">
-        <td th:text="${iterStat.count}"></td>
-        <td th:text="${product.name}"></td>
-        <td th:text="${product.startingPrice} + ' VND'"></td>
-        <td th:text="${product.category}"></td>
-        <td th:text="${product.status}"></td>
-        <td>
-            <a th:href="@{/products/edit/{id}(id=${product.id})}">Sửa</a> |
-            <a th:href="@{/products/delete/{id}(id=${product.id})}" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</a>
-        </td>
-    </tr>
-</table>
+    <form th:action="@{/products}" method="get" class="form-inline mb-4">
+        <input type="text" name="name" class="form-control mr-2" placeholder="Nhập tên sản phẩm">
+        <input type="text" name="category" class="form-control mr-2" placeholder="Nhập loại sản phẩm">
+        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+    </form>
 
-<a th:href="@{/products/new}">Thêm sản phẩm</a>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>STT</th>
+            <th>Tên sản phẩm</th>
+            <th>Giá khởi điểm</th>
+            <th>Loại</th>
+            <th>Tình trạng</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product, iterStat : ${products}">
+            <td th:text="${iterStat.count}"></td>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.startingPrice} + ' VND'"></td>
+            <td th:text="${product.category}"></td>
+            <td th:text="${product.status}"></td>
+            <td>
+                <a th:href="@{/products/edit/{id}(id=${product.id})}" class="btn btn-warning btn-sm">Sửa</a> |
+                <a th:href="@{/products/delete/{id}(id=${product.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/products/new}" class="btn btn-success">Thêm sản phẩm</a>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>

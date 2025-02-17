@@ -1,34 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Thêm/Sửa Sản phẩm</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/styles.css}">
 </head>
 <body>
-<h2 th:text="${product.id == null ? 'Thêm sản phẩm' : 'Chỉnh sửa sản phẩm'}"></h2>
 
-<form th:action="@{/products}" th:object="${product}" method="post">
-    <input type="hidden" th:field="*{id}">
+<div class="container mt-5">
+    <h2 th:text="${product.id == null ? 'Thêm sản phẩm' : 'Chỉnh sửa sản phẩm'}"></h2>
 
-    <label>Tên sản phẩm:</label>
-    <input type="text" th:field="*{name}" required><br>
+    <form th:action="@{/products}" th:object="${product}" method="post" class="form-group">
+        <input type="hidden" th:field="*{id}">
 
-    <label>Giá khởi điểm:</label>
-    <input type="number" th:field="*{startingPrice}" required><br>
+        <div class="form-group">
+            <label>Tên sản phẩm:</label>
+            <input type="text" th:field="*{name}" class="form-control" required>
+        </div>
 
-    <label>Loại sản phẩm:</label>
-    <input type="text" th:field="*{category}" required><br>
+        <div class="form-group">
+            <label>Giá khởi điểm:</label>
+            <input type="number" th:field="*{startingPrice}" class="form-control" required>
+        </div>
 
-    <label>Tình trạng:</label>
-    <select th:field="*{status}">
-        <option value="chờ duyệt">Chờ duyệt</option>
-        <option value="đang đấu giá">Đang đấu giá</option>
-        <option value="đã bán">Đã bán</option>
-    </select><br>
+        <div class="form-group">
+            <label>Loại sản phẩm:</label>
+            <input type="text" th:field="*{category}" class="form-control" required>
+        </div>
 
-    <button type="submit">Lưu</button>
-</form>
+        <div class="form-group">
+            <label>Tình trạng:</label>
+            <select th:field="*{status}" class="form-control">
+                <option value="chờ duyệt">Chờ duyệt</option>
+                <option value="đang đấu giá">Đang đấu giá</option>
+                <option value="đã bán">Đã bán</option>
+            </select>
+        </div>
 
-<a th:href="@{/products}">Quay lại danh sách</a>
+        <button type="submit" class="btn btn-primary">Lưu</button>
+    </form>
+
+    <a th:href="@{/products}" class="btn btn-secondary mt-3">Quay lại danh sách</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>
