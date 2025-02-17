@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quản lý Sản phẩm Đấu Giá</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<h2>Danh sách sản phẩm</h2>
+
+<form th:action="@{/products}" method="get">
+    <input type="text" name="name" placeholder="Nhập tên sản phẩm">
+    <input type="text" name="category" placeholder="Nhập loại sản phẩm">
+    <button type="submit">Tìm kiếm</button>
+</form>
+
+<table border="1">
+    <tr>
+        <th>STT</th>
+        <th>Tên sản phẩm</th>
+        <th>Giá khởi điểm</th>
+        <th>Loại</th>
+        <th>Tình trạng</th>
+        <th>Hành động</th>
+    </tr>
+    <tr th:each="product, iterStat : ${products}">
+        <td th:text="${iterStat.count}"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.startingPrice} + ' VND'"></td>
+        <td th:text="${product.category}"></td>
+        <td th:text="${product.status}"></td>
+        <td>
+            <a th:href="@{/products/edit/{id}(id=${product.id})}">Sửa</a> |
+            <a th:href="@{/products/delete/{id}(id=${product.id})}" onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</a>
+        </td>
+    </tr>
+</table>
+
+<a th:href="@{/products/new}">Thêm sản phẩm</a>
+</body>
+</html>
