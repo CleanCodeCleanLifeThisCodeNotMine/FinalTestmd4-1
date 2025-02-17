@@ -12,8 +12,8 @@
     <h2>Danh sách sản phẩm</h2>
 
     <form th:action="@{/products}" method="get" class="form-inline mb-4">
-        <input type="text" name="name" class="form-control mr-2" placeholder="Nhập tên sản phẩm">
-        <input type="text" name="category" class="form-control mr-2" placeholder="Nhập loại sản phẩm">
+        <input type="text" name="name" class="form-control mr-2" placeholder="Nhập tên sản phẩm" th:value="${param.name}">
+        <input type="text" name="category" class="form-control mr-2" placeholder="Nhập loại sản phẩm" th:value="${param.category}">
         <button type="submit" class="btn btn-primary">Tìm kiếm</button>
     </form>
 
@@ -43,8 +43,20 @@
         </tbody>
     </table>
 
-    <a th:href="@{/products/new}" class="btn btn-success">Thêm sản phẩm</a>
+    <!-- Phân trang -->
+    <div>
+        <span th:if="${currentPage > 0}">
+            <a th:href="@{/products(page=${currentPage - 1}, size=${size}, name=${param.name}, category=${param.category})}" class="btn btn-secondary btn-sm">Prev</a>
+        </span>
+        <span>Trang <span th:text="${currentPage + 1}"></span> của <span th:text="${totalPages}"></span></span>
+        <span th:if="${currentPage < totalPages - 1}">
+            <a th:href="@{/products(page=${currentPage + 1}, size=${size}, name=${param.name}, category=${param.category})}" class="btn btn-secondary btn-sm">Next</a>
+        </span>
+    </div>
+
+    <a th:href="@{/products/new}" class="btn btn-success mt-3">Thêm sản phẩm</a>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

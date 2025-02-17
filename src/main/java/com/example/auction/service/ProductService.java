@@ -1,12 +1,12 @@
 package com.example.auction.service;
 
 import com.example.auction.model.Product;
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface ProductService {
-    List<Product> getAllProducts();
+    Page<Product> getAllProducts(int page, int size);
     Product getProductById(Long id);
     Product saveProduct(Product product);
     void deleteProduct(Long id);
-    List<Product> searchProducts(String name, String category);
+    Page<Product> searchProducts(String name, String category, int page, int size);
 }

@@ -2,9 +2,9 @@ package com.example.auction.service;
 
 import com.example.auction.model.Product;
 import com.example.auction.repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -16,8 +16,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public Page<Product> getAllProducts(int page, int size) {
+        return productRepository.findAll(PageRequest.of(page, size));
     }
 
     @Override
@@ -36,12 +36,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> searchProducts(String name, String category) {
-        if (name != null && !name.isEmpty()) {
-            return productRepository.findByNameContaining(name);
+    public Page<Product> searchProducts(String name, String category, int page, int size) {
+        if (name != null && !name.isEmpty() && category != null && !category.isEmpty()) {
+            return productRepository.findByNameContainingAndCategoryContaining(name, category, PageRequest.of(page, size));
+        } else if (name != null && !name.isEmpty()) {
+            return productRepository.findByNameContaining(name, PageRequest.of(page, size));
         } else if (category != null && !category.isEmpty()) {
-            return productRepository.findByCategory(category);
+            return productRepository.findByCategoryContaining(category, PageRequest.of(page, size));
         }
-        return productRepository.findAll();
+        return productRepository.findAll(PageRequest.of(page, size));
     }
 }
