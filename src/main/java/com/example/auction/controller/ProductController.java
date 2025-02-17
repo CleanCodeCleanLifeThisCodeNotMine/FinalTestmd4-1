@@ -25,7 +25,12 @@ public class ProductController {
                                @RequestParam(value = "name", required = false) String name,
                                @RequestParam(value = "category", required = false) String category,
                                @RequestParam(value = "page", defaultValue = "0") int page,
-                               @RequestParam(value = "size", defaultValue = "10") int size) {
+                               @RequestParam(value = "size", defaultValue = "5") int size) {
+
+        if (size > 5) {
+            size = 5;
+        }
+
         Page<Product> productsPage = productService.searchProducts(name, category, page, size);
         model.addAttribute("products", productsPage.getContent());
         model.addAttribute("currentPage", page);
@@ -34,6 +39,7 @@ public class ProductController {
         model.addAttribute("size", size);
         return "product-list.html";
     }
+
 
     @GetMapping("/new")
     public String showAddForm(Model model) {
