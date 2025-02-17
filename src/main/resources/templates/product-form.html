@@ -17,16 +17,31 @@
         <div class="form-group">
             <label>Tên sản phẩm:</label>
             <input type="text" th:field="*{name}" class="form-control" required>
+            <div th:if="${#fields.hasErrors('name')}" class="text-danger">
+                <ul>
+                    <li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+                </ul>
+            </div>
         </div>
 
         <div class="form-group">
             <label>Giá khởi điểm:</label>
             <input type="number" th:field="*{startingPrice}" class="form-control" required>
+            <div th:if="${#fields.hasErrors('startingPrice')}" class="text-danger">
+                <ul>
+                    <li th:each="err : ${#fields.errors('startingPrice')}" th:text="${err}"></li>
+                </ul>
+            </div>
         </div>
 
         <div class="form-group">
             <label>Loại sản phẩm:</label>
             <input type="text" th:field="*{category}" class="form-control" required>
+            <div th:if="${#fields.hasErrors('category')}" class="text-danger">
+                <ul>
+                    <li th:each="err : ${#fields.errors('category')}" th:text="${err}"></li>
+                </ul>
+            </div>
         </div>
 
         <div class="form-group">

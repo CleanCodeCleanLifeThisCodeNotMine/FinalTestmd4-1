@@ -5,7 +5,10 @@ import com.example.auction.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/products")
@@ -23,7 +26,7 @@ public class ProductController {
                                @RequestParam(value = "category", required = false) String category,
                                @RequestParam(value = "page", defaultValue = "0") int page,
                                @RequestParam(value = "size", defaultValue = "10") int size) {
-        Page<Product> productsPage = productService.searchProducts(name, category, page, size); // Cập nhật tham số
+        Page<Product> productsPage = productService.searchProducts(name, category, page, size);
         model.addAttribute("products", productsPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productsPage.getTotalPages());
@@ -39,7 +42,10 @@ public class ProductController {
     }
 
     @PostMapping
-    public String saveProduct(@ModelAttribute Product product) {
+    public String saveProduct(@Valid @ModelAttribute Product product, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "product-form"; // Nếu có lỗi validation, hiển thị lại form
+        }
         productService.saveProduct(product);
         return "redirect:/products";
     }

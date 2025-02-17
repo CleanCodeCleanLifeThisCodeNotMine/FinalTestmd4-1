@@ -1,6 +1,13 @@
 package com.example.auction.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+import jakarta.validation.Valid;
+
 
 @Entity
 @Table(name = "products")
@@ -11,18 +18,23 @@ public class Product {
     private Long id;
 
     @Column(nullable = false)
+    @NotEmpty(message = "Tên sản phẩm không được để trống")
+    @Size(min = 5, max = 50, message = "Tên sản phẩm phải có độ dài từ 5 đến 50 ký tự")
     private String name;
 
     @Column(nullable = false)
+    @NotNull(message = "Giá khởi điểm không được để trống")
+    @Min(value = 100000, message = "Giá khởi điểm phải ít nhất là 100,000 VND")
     private Double startingPrice;
 
     @Column(nullable = false)
+    @NotEmpty(message = "Loại sản phẩm không được để trống")
     private String category;
 
     @Column(nullable = false)
+    @NotEmpty(message = "Tình trạng không được để trống")
     private String status; // chờ duyệt, đang đấu giá, đã bán
 
-    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
